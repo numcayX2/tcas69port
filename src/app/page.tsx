@@ -1,4 +1,6 @@
 import Image from "next/image";
+import FormDemo from "@/components/FormDemo";
+import GsapHello from "@/components/GsapHello";
 
 export default function Home() {
   return (
@@ -24,6 +26,11 @@ export default function Home() {
             Save and see your changes instantly.
           </li>
         </ol>
+
+        <div className="flex flex-col gap-6 items-stretch w-full">
+          <GsapHello />
+          <FormDemo />
+        </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
