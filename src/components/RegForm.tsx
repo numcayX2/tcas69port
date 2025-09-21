@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { useStudentStore } from "../store/Formstore";
-import type { ReactNode } from "react";
 import type { StudentMedia } from "@/store/Formstore";
 
 export type FormValues = {
@@ -21,8 +20,10 @@ export type FormValues = {
 };
 
 export default function RegForm() {
+  // Avoid hydration mismatch from browser extensions by mounting on client
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+
   const add = useStudentStore((s) => s.add);
 
   const {
@@ -58,6 +59,7 @@ export default function RegForm() {
     const files = data.mediaFiles ? Array.from(data.mediaFiles) : [];
     const MAX_FILES = 5;
     const MAX_SIZE = 3 * 1024 * 1024; // 3MB
+
     if (files.length > MAX_FILES) {
       alert(`อัปโหลดได้ไม่เกิน ${MAX_FILES} ไฟล์`);
       return;
@@ -103,7 +105,7 @@ export default function RegForm() {
   if (!mounted) return null;
 
   return (
-    <div className="mx-auto w-full max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm mb-12">
+    <div className="mx-auto mb-12 w-full max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold text-gray-900">สมัคร Portfolio (TCAS69)</h2>
@@ -157,12 +159,7 @@ export default function RegForm() {
               type="number"
               step="0.01"
               placeholder="เช่น 3.25"
-              {...register("gpa", {
-                required: "จำเป็น",
-                min: { value: 0, message: "ขั้นต่ำ 0.00" },
-                max: { value: 4, message: "ไม่เกิน 4.00" },
-                valueAsNumber: true,
-              })}
+              {...register("gpa", { required: "จำเป็น", min: { value: 0, message: "ขั้นต่ำ 0.00" }, max: { value: 4, message: "ไม่เกิน 4.00" }, valueAsNumber: true })}
             />
           </Field>
         </div>
@@ -234,7 +231,6 @@ export default function RegForm() {
   );
 }
 
-/** Small helper for label + error layout */
 function Field({
   label,
   error,
@@ -252,3 +248,4 @@ function Field({
     </div>
   );
 }
+

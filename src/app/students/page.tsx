@@ -31,9 +31,8 @@ export default function StudentsPage() {
   }, [students, sortKey, sortDir]);
 
   const toggleSort = (key: SortKey) => {
-    if (key === sortKey) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
+    if (key === sortKey) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    else {
       setSortKey(key);
       setSortDir("asc");
     }
@@ -57,22 +56,28 @@ export default function StudentsPage() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-emerald-50">
             <tr>
-              <th scope="col" className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left text-sm font-semibold text-gray-700"
+                aria-sort={sortKey === "name" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+              >
                 <button
                   type="button"
                   onClick={() => toggleSort("name")}
                   className="inline-flex items-center text-gray-700 hover:text-gray-900"
-                  aria-sort={sortKey === "name" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
                 >
                   ชื่อ {arrow("name")}
                 </button>
               </th>
-              <th scope="col" className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left text-sm font-semibold text-gray-700"
+                aria-sort={sortKey === "gpa" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+              >
                 <button
                   type="button"
                   onClick={() => toggleSort("gpa")}
                   className="inline-flex items-center text-gray-700 hover:text-gray-900"
-                  aria-sort={sortKey === "gpa" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
                 >
                   GPA {arrow("gpa")}
                 </button>
@@ -93,9 +98,7 @@ export default function StudentsPage() {
                   <td className="px-4 py-3 text-sm text-gray-900">{s.fname} {s.sname}</td>
                   <td className="px-4 py-3 text-sm text-gray-900">{s.gpa.toFixed(2)}</td>
                   <td className="px-4 py-3 text-sm">
-                    <Link href={`/students/${s.id}`} className="text-emerald-700 hover:underline">
-                      ดูรายละเอียด
-                    </Link>
+                    <Link href={`/students/${s.id}`} className="text-emerald-700 hover:underline">ดูรายละเอียด</Link>
                   </td>
                 </tr>
               ))

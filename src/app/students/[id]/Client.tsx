@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useStudentStore } from "@/store/Formstore";
 import type { StudentMedia } from "@/store/Formstore";
 
@@ -13,9 +14,7 @@ export default function StudentDetailClient({ id }: { id: string }) {
       <main className="mx-auto w-full max-w-3xl p-6">
         <div className="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm">
           <p className="mb-4 text-gray-700">ไม่พบข้อมูลนักศึกษา</p>
-          <Link href="/students" className="text-emerald-700 hover:underline">
-            กลับหน้ารายชื่อ
-          </Link>
+          <Link href="/students" className="text-emerald-700 hover:underline">กลับหน้ารายชื่อ</Link>
         </div>
       </main>
     );
@@ -25,9 +24,7 @@ export default function StudentDetailClient({ id }: { id: string }) {
     <main className="mx-auto w-full max-w-3xl p-6">
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-gray-900">รายละเอียดนักศึกษา</h1>
-        <Link href="/students" className="text-sm text-emerald-700 hover:underline">
-          กลับหน้ารายชื่อ
-        </Link>
+        <Link href="/students" className="text-sm text-emerald-700 hover:underline">กลับหน้ารายชื่อ</Link>
       </div>
 
       <div className="space-y-4 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -68,20 +65,13 @@ function MediaGrid({ items }: { items: StudentMedia[] }) {
       {items.map((m) => (
         <div key={m.id} className="overflow-hidden rounded-lg border border-gray-200">
           {m.type.startsWith("image/") ? (
-            <img src={m.dataUrl} alt={m.name} className="h-52 w-full object-cover" />
+            <Image src={m.dataUrl} alt={m.name} width={800} height={400} unoptimized className="h-52 w-full object-cover" />
           ) : m.type.startsWith("video/") ? (
             <video src={m.dataUrl} controls className="h-52 w-full object-cover" />
           ) : (
             <div className="p-4">
               <div className="text-sm font-medium text-gray-900">{m.name}</div>
-              <a
-                href={m.dataUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm text-emerald-700 hover:underline"
-              >
-                เปิดไฟล์
-              </a>
+              <a href={m.dataUrl} target="_blank" rel="noreferrer" className="text-sm text-emerald-700 hover:underline">เปิดไฟล์</a>
             </div>
           )}
         </div>
