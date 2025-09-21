@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStudentStore } from "../store/Formstore";
 import type { ReactNode } from "react";
@@ -20,6 +21,8 @@ export type FormValues = {
 };
 
 export default function RegForm() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const add = useStudentStore((s) => s.add);
 
   const {
@@ -97,8 +100,10 @@ export default function RegForm() {
     alert("บันทึกสำเร็จ");
   };
 
+  if (!mounted) return null;
+
   return (
-    <div className="mx-auto w-full max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div className="mx-auto w-full max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm mb-12">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold text-gray-900">สมัคร Portfolio (TCAS69)</h2>
